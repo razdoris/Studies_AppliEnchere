@@ -9,8 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
-<h1>page de test a detruire</h1>
-<p>${user}</p>
+	<%@ include file="header.jspf" %> <!-- code d'inclusion de la jspf header /!\ attention au chemin du fichier, il peut etre different -->
+
+
+	<h1>page de test a detruire</h1>
+
+
+	<%@ include file="footer.jspf" %> <!-- code d'inclusion de la jspf footer /!\ attention au chemin du fichier, il peut etre different -->
 </body>
 </html>
