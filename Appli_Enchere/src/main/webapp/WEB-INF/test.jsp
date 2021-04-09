@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<link rel="stylesheet" href="css/main.css" media="screen"/>
+		<!-- <link rel="stylesheet" href="css/main.css" media="screen"/> --><!-- pas utilisé pour le moment -->
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<title>Insert title here</title>
@@ -16,6 +16,8 @@
 	
 		<h1>page de test a detruire</h1>
 	
+		<a href="NouvelleVente">nouvelle vente</a>
+		
 	
 		<%@ include file="footer.jspf" %> <!-- code d'inclusion de la jspf footer /!\ attention au chemin du fichier, il peut etre different -->
 	</body>

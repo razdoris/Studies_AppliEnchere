@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>
+<context>
 	<Resource
 		name="jdbc/pool_cnx"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
 		
-		url="jdbc:sqlserver://localhost;databasename=BDD_GESTION_LISTE_COURSE"
+		url="jdbc:sqlserver://localhost;databasename=BDD_APPLI_ENCHERE"
 		username="utilisateurBDD"
 		password="Pa$$w0rd"
 		
@@ -14,4 +14,4 @@
 		maxWaitMillis="10000"
 	/>
 
-</Context>
+</context>
