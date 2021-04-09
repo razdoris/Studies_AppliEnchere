@@ -1,5 +1,5 @@
 <header class="header text-dark">
-   <nav class="navbar ">
+   <nav class="navbar">
 	  <div class="container-fluid">
 	    <a class="navbar-brand">Eni-Enchères</a>
 	    <div class="d-flex .collapse .navbar-collapse">
