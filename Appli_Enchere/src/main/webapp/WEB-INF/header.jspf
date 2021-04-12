@@ -1,0 +1,22 @@
+<header class="header text-dark">
+   <nav class="navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand">Eni-Enchères</a>
+	    <div class="d-flex .collapse .navbar-collapse">
+	    <c:choose>
+	    	<c:when test="${empty user}"> <!-- s'il n'y a pas de d'attribut de session user (donc personne de connectée) alors on affiche ça -->
+			     <a class="m-1" href="#">S'inscrire - Se connecter</a><!-- lien vers la page de deconnexion -->
+			</c:when>
+			<c:otherwise><!-- s'il y a un attribut de session user (donc une personne de connectée) alors on affiche ça -->
+			      <a class="m-2" href="#">Enchères</a><!-- lien vers les enchères -->
+			      <a class="m-2" href="#">Vendre un article</a><!-- lien vers la page de vente d'un article -->
+			      <a class="m-2" href="#">Mon Profil</a><!-- lien vers mon profil -->
+			      <a class="m-2" href="#">Déconnexion</a><!-- lien vers la page de déconnexion -->
+			 </c:otherwise>
+	    </c:choose>
+	    
+	    </div>
+	  </div>
+	</nav>
+</header>
+  
