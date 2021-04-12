@@ -3,7 +3,8 @@ package fr.eni.javaee.appliencheres.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.javaee.appliencheres.bo.Utilisateurs;
 
@@ -12,9 +13,11 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR="INSERT INTO utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe) values(?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_UTILISATEUR="UPDATE utilisateurs SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
-	private static final String SELECT_BY_ID_UTILISATEUR="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, vill FROM utilisateurs WHERE no_utilisateur=?";
+	private static final String SELECT_BY_ID_UTILISATEUR="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String DELETE_UTILISATEUR="DELETE FROM utilisateurs WHERE no_utilisateur=?";
-
+	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur FROM utilisateurs WHERE pseudo=?";
+	private static final String SELECT_BY_EMAIL="SELECT no_utilisateur FROM utilisateurs WHERE email=?";
+	
 	@Override
 	public void insert(Utilisateurs utilisateur) throws DALException {
 		try(Connection cnx = ConnectionProvider.getConnection())
@@ -119,6 +122,57 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 
 	}
 	
+	public List<Utilisateurs> selectByPseudo(String pseudo) throws DALException {
+		List<Utilisateurs>listUtilisateurs = new ArrayList<>();
+		ResultSet rs = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+				try(PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO)){
+				pstmt.setString(1, pseudo);
+				rs = pstmt.executeQuery();
+				if(rs.next()){
+					Utilisateurs user= new Utilisateurs(rs.getInt("no_utilisateur"));
+				listUtilisateurs.add(user);
+				
+				}
+
+			}catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		catch(Exception ex)
+		{
+			throw new DALException(ex);
+		}
+		return listUtilisateurs;
+
+	}
+	
+	public List<Utilisateurs> selectByEmail(String email) throws DALException {
+		List<Utilisateurs>listUtilisateurs = new ArrayList<>();
+		ResultSet rs = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+				try(PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL)){
+				pstmt.setString(1, email);
+				rs = pstmt.executeQuery();
+				if(rs.next()){
+					Utilisateurs user= new Utilisateurs(rs.getInt("no_utilisateur"));
+				listUtilisateurs.add(user);
+				
+				}
+
+			}catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		catch(Exception ex)
+		{
+			throw new DALException(ex);
+		}
+		return listUtilisateurs;
+
+	}
 	
 }
 

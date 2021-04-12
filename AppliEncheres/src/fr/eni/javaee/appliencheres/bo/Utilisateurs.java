@@ -69,6 +69,12 @@ public class Utilisateurs {
 	}
 
 
+	public Utilisateurs(Integer no_utilisateur) {
+		super();
+		this.no_utilisateur = no_utilisateur;
+	}
+
+
 	public Integer getNo_utilisateur() {
 		return no_utilisateur;
 	}
