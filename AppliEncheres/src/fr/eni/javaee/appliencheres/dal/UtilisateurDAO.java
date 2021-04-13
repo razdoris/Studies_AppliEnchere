@@ -15,7 +15,7 @@ public interface UtilisateurDAO {
 	
 	public abstract Utilisateurs selectById(int id) throws DALException;
 	
-	public abstract void delete(int id) throws DALException;
+	public abstract void delete(int id)  throws DALException;
 
 	public List<Utilisateurs> selectByPseudo(String pseudo) throws DALException;
 	
