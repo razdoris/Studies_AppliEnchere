@@ -21,4 +21,16 @@
 	margin-bottom: 30px;
 }
 
-/*commentaire*/
+.form-group.required .col-form-label:after {
+  content:"*";
+  color:red;
+}
+
+.explaination:before{
+  content:"*";
+  color:red;
+}
+
+.explaination{
+	text-align: right;
+}

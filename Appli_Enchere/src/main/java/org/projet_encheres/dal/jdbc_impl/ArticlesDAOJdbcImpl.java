@@ -21,7 +21,7 @@ public class ArticlesDAOJdbcImpl implements ArticleDAO{
 			+ " prix_vente, no_vendeur, no_categorie, vente_annule FROM articles";
 			
 	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-			+ "prix_initial, prix_vente, no_vendeur, no_categorie, vente_annule FROM articles a WHERE no_articles = ?";
+			+ "prix_initial, prix_vente, no_vendeur, no_categorie, vente_annule FROM articles a WHERE no_article = ?";
 	private static final String DELETE="DELETE FROM articles WHERE no_article = ?";
 	
 	
@@ -166,8 +166,7 @@ public class ArticlesDAOJdbcImpl implements ArticleDAO{
 	}
 
 	@Override
-	public void delete(Articles article) throws Exception {
-		int id = article.getNoArticle();
+	public void delete(int id) throws Exception {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			try(PreparedStatement pstmt = cnx.prepareStatement(DELETE)){

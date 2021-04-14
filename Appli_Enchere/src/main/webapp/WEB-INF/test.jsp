@@ -16,7 +16,9 @@
 	
 		<h1>page de test a detruire</h1>
 	
-		<a href="NouvelleVente">nouvelle vente</a>
+		<a href="NouvelleVente">nouvelle vente</a><br>	
+		<a href="ModifierVente?id=7">modif vente</a>	<br>
+		<a href="VisualiserVente?id=7">visualiser vente</a>
 		
 	
 		<%@ include file="footer.jspf" %> <!-- code d'inclusion de la jspf footer /!\ attention au chemin du fichier, il peut etre different -->

@@ -15,12 +15,12 @@ public class ArticlesManager {
 		this.articleDAO = DAOFactory.getArticleDao();
 	}
 	
-	public List<Articles> recupereListeDeTousLesArticles(){
-		List<Articles> listDeTousLesArticles = new ArrayList<>();
+	public List<Articles> recupererListeDeTousLesArticles(){
+		List<Articles> listeDeTousLesArticles = new ArrayList<>();
 		try
 		{
-			listDeTousLesArticles = this.articleDAO.selectAll();
-			System.out.println("liste articles dans manager : " + listDeTousLesArticles);
+			listeDeTousLesArticles = this.articleDAO.selectAll();
+			System.out.println("liste articles dans manager : " + listeDeTousLesArticles);
 		}
 		 catch (Exception e) 
 		{
@@ -28,8 +28,36 @@ public class ArticlesManager {
 			e.printStackTrace();
 		}
 		
-		return listDeTousLesArticles;
+		return listeDeTousLesArticles;
 		
+	}
+	
+	public Articles recupererUnArticles(int idArticle){
+		Articles article = new Articles();
+		System.out.println("id dans article manager ok" + idArticle);
+		try
+		{
+			article = this.articleDAO.selectById(idArticle);
+			System.out.println("articles dans manager : " + article);
+		}
+		 catch (Exception e) 
+		{
+			 // TODO modifier la type d'erreur pour message utilisateur
+			e.printStackTrace();
+		}
+		
+		return article;
+		
+	}
+	
+	public Articles ajouterUnArticle(Articles article) {
+		try {
+			this.articleDAO.insert(article);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return article;
 	}
 	
 	

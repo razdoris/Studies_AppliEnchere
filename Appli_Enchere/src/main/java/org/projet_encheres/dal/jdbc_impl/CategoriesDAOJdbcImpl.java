@@ -1,41 +1,35 @@
 package org.projet_encheres.dal.jdbc_impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.projet_encheres.bo.Articles;
+import org.projet_encheres.bo.Categories;
 import org.projet_encheres.bo.Retrait;
+import org.projet_encheres.dal.CategoriesDAO;
 import org.projet_encheres.dal.ConnectionProvider;
-import org.projet_encheres.dal.RetraitDAO;
 
-public class RetraitDAOJdbcImpl implements RetraitDAO{
+public class CategoriesDAOJdbcImpl implements CategoriesDAO{
 
-	private static final String INSERT="INSERT INTO retraits "
-			+ "Values (?, ?, ?, ?)";
-	private static final String SELECT_ALL="SELECT no_article, rue, code_postal, ville FROM retraits";
-	private static final String SELECT_BY_ID="SELECT no_article, rue, code_postal, ville FROM retraits WHERE no_article = ?";
-	private static final String DELETE="DELETE FROM retraits WHERE no_article";
+	private static final String INSERT="INSERT INTO categories Values (?, ?)";
+	private static final String SELECT_ALL="SELECT no_categorie, libelle FROM categories";			
+	private static final String SELECT_BY_ID="SELECT no_categorie, libelle FROM categories WHERE no_categorie = ?";
+	private static final String DELETE="DELETE FROM categories WHERE no_categorie = ?";
+	
 	
 	@Override
-	public void insert(Retrait retrait) throws Exception {
+	public void insert(Categories categorie) throws Exception {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			cnx.setAutoCommit(false);
-			int noArticle = retrait.getNoArticleRetirerIci();
-			String rueRetrait  = retrait.getRue();
-			String cpRetrait  = retrait.getCodePostal();
-			String villeRetrait = retrait.getVille();
+			int noCategorie = categorie.getNoCategorie();
+			String nomCategorie  = categorie.getNomCategorie();
 			
 			try(PreparedStatement pstmt = cnx.prepareStatement(INSERT)){
-				pstmt.setInt(1, noArticle);
-				pstmt.setString(2, rueRetrait);
-				pstmt.setString(3, cpRetrait);
-				pstmt.setString(4, villeRetrait);
+				pstmt.setInt(1, noCategorie);
+				pstmt.setString(2, nomCategorie);
 				pstmt.executeUpdate();
 				
 				cnx.commit();
@@ -57,20 +51,18 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 	}
 
 	@Override
-	public List<Retrait> selectAll() throws Exception {
-		List<Retrait> listRetrait = new ArrayList<>();
+	public List<Categories> selectAll() throws Exception {
+		List<Categories> listCategorie = new ArrayList<>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			try(PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL)){
 				ResultSet rs =  pstmt.executeQuery();
 				while(rs.next())
 				{
-					Retrait retrait = new Retrait();
-					retrait.setNoArticleRetirerIci(rs.getInt("no_article"));
-					retrait.setRue(rs.getString("rue"));
-					retrait.setCodePostal(rs.getString("code_postal"));
-					retrait.setVille(rs.getString("ville"));
-					listRetrait.add(retrait);
+					Categories categorie = new Categories();
+					categorie.setNoCategorie(rs.getInt("no_categorie"));
+					categorie.setNomCategorie(rs.getString("libelle"));
+					listCategorie.add(categorie);
 				}
 			}
 			catch(Exception e)
@@ -86,14 +78,12 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			e.printStackTrace();;
 			throw e;
 		}
-		System.out.println("liste dans jdbcImpl :" + listRetrait);
-		return listRetrait;
-		
+		return listCategorie;
 	}
 
 	@Override
-	public Retrait selectById(int id) throws Exception {
-		Retrait retrait = new Retrait();
+	public Categories selectById(int id) throws Exception {
+		Categories categorie = new Categories();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			try(PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID)){
@@ -101,11 +91,9 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 				ResultSet rs =  pstmt.executeQuery();
 				while(rs.next())
 				{
-					retrait.setNoArticleRetirerIci(rs.getInt("no_article"));
-					retrait.setRue(rs.getString("rue"));
-					retrait.setCodePostal(rs.getString("code_postal"));
-					retrait.setVille(rs.getString("ville"));
-					}
+					categorie.setNoCategorie(rs.getInt("no_categorie"));
+					categorie.setNomCategorie(rs.getString("libelle"));
+				}
 			}
 			catch(Exception e)
 			{
@@ -120,8 +108,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			e.printStackTrace();;
 			throw e;
 		}
-		
-		return retrait;
+		return categorie;
 	}
 
 	@Override
@@ -146,7 +133,6 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			e.printStackTrace();;
 			throw e;
 		}
-		
 		
 	}
 
