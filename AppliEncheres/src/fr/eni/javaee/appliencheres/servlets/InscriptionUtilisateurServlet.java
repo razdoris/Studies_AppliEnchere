@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.javaee.appliencheres.bll.BLLException;
 import fr.eni.javaee.appliencheres.bll.UtilisateurManager;
+import fr.eni.javaee.appliencheres.bo.Utilisateurs;
 
 /**
  * Servlet implementation class page3Servlet
@@ -44,6 +45,7 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("post enchere1");
 		//Mise en place des paramètres pour récupérer les erreurs
 		String resultat;
 		Map<String,String> erreur= new HashMap<String, String>();
@@ -62,54 +64,57 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 		
 		//Validation présence des données
 		try {
-			validerParam(pseudo);
+			presenceParam(pseudo);
+			conformiteParam(pseudo);
 		}catch(Exception ex){
 			erreur.put(champ_pseudo, ex.getMessage());
 		}
 		
+		
 		try {
-			validerParam(nom);
+			presenceParam(nom);
 		}catch(Exception ex){
 			erreur.put(champ_nom, ex.getMessage());
 		}
 			
 		try {	
-			validerParam(prenom);
+			presenceParam(prenom);
 		}catch(Exception ex){
 			erreur.put(champ_prenom, ex.getMessage());
 		}
 		
 		try {	
-			validerParam(email);
+			presenceParam(email);
 		}catch(Exception ex){
 			erreur.put(champ_email, ex.getMessage());
 		}
 		
 		try {	
-			validerParam(telephone);
+			presenceParam(telephone);
 		}catch(Exception ex){
 			erreur.put(champ_telephone, ex.getMessage());
 		}
 		
 		try {	
-			validerParam(rue);
+			presenceParam(rue);
 		}catch(Exception ex){
 			erreur.put(champ_rue, ex.getMessage());
 		}
 		
 		try {	
-			validerParam(cp);
+			presenceParam(cp);
 		}catch(Exception ex){
 			erreur.put(champ_cp, ex.getMessage());
 		}
 		try {	
-			validerParam(ville);
+			presenceParam(ville);
 		}catch(Exception ex){
 			erreur.put(champ_ville, ex.getMessage());
 		}
 		
 		//Validation du mot de passe
-		try {	
+		try {
+			presenceParam(password);
 			validerMotDePasse(password, confirmation);
 		}catch(Exception ex){
 			erreur.put(champ_password, ex.getMessage());
@@ -117,12 +122,22 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 		
 		if(erreur.isEmpty()) {
 			
+			//ajouter l'utilisateur
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
-				utilisateurManager.ajouterUtilisateur(pseudo, nom, prenom, email, telephone, rue, cp, ville, password);
-				RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+				Utilisateurs utilisateur=utilisateurManager.ajouterUtilisateur(pseudo, nom, prenom, email, telephone, rue, cp, ville, password);
+				request.setAttribute("inscription_utilisateur", utilisateur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp");
 				rd.forward(request, response);
 			}catch(Exception ex){
+				ex.printStackTrace();
+				resultat = ex.getMessage();
+				request.setAttribute(inscription_resultat, resultat);
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/inscriptionUtilisateur.jsp");
+				rd.forward(request, response);
+			}
+			}else {
+				//renvoie les erreurs de la servlet
 				resultat = "Echec de l'inscription";
 				request.setAttribute(inscription_erreur, erreur);
 				request.setAttribute(inscription_resultat, resultat);
@@ -131,20 +146,25 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		}
-	}
+	
 	
 	//Méthodes de validation des informations
-	private void validerParam(String donnee) throws Exception {
+	private void presenceParam(String donnee) throws Exception {
 		if(donnee == null || donnee.trim().length()==0 ) {
-			throw new Exception();
+			throw new Exception("Le champ est vide, veuillez le compléter");
+		}
+	}
+	
+	private void conformiteParam(String donnee) throws Exception {
+	String regExpression="[a-zA-Z_0-9]*";
+	if(!donnee.matches(regExpression)) {
+		throw new Exception("Le champ ne doit contenir que des caractères alphanumériques");
 		}
 	}
 	
 	private void validerMotDePasse(String password, String confirmation) throws Exception {
-		if (password != null && password.trim().length() != 0) {
 			if (!password.equals(confirmation)) {
 				throw new Exception("Mots de passe non identiques, veuillez rééssayer");
-			}
 		}
 	}
 }

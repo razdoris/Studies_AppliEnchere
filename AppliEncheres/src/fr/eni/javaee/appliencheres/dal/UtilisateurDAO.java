@@ -13,7 +13,11 @@ public interface UtilisateurDAO {
 
 	public abstract void update(Utilisateurs utilisateur) throws DALException;
 	
+	public List<Utilisateurs> selectAll () throws DALException;
+	
 	public abstract Utilisateurs selectById(int id) throws DALException;
+	
+	public abstract Utilisateurs selectByLogin(String pseudo, String password) throws DALException;
 	
 	public abstract void delete(int id)  throws DALException;
 

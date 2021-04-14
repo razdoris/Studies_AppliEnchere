@@ -1,7 +1,7 @@
 <header class="header text-dark">
    <nav class="navbar">
 	  <div class="container-fluid">
-	    <a class="navbar-brand">Eni-Enchères</a>
+	    <a class="navbar-brand" href="${pageContext.servletContext.contextPath}">Eni-Enchères</a>
 	    <div class="d-flex .collapse .navbar-collapse">
 	    <c:choose>
 	    	<c:when test="${empty user}"> <!-- s'il n'y a pas de d'attribut de session user (donc personne de connectée) alors on affiche ça -->
