@@ -15,7 +15,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	private static final String UPDATE_UTILISATEUR="UPDATE utilisateurs SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
 	private static final String SELECT_ALL_UTILISATEURS="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM utilisateurs";
 	private static final String SELECT_BY_ID_UTILISATEUR="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM utilisateurs WHERE no_utilisateur=?";
-	private static final String SELECT_BY_LOGIN_UTILISATEUR="SELECT * FROM utilisateurs WHERE pseudo=? AND password=?";
+	private static final String SELECT_BY_LOGIN_UTILISATEUR="SELECT * FROM utilisateurs WHERE pseudo=? AND mot_de_passe=?";
 	private static final String DELETE_UTILISATEUR="DELETE FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur FROM utilisateurs WHERE pseudo=?";
 	private static final String SELECT_BY_EMAIL="SELECT no_utilisateur FROM utilisateurs WHERE email=?";
@@ -138,6 +138,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	
 	
 	public Utilisateurs selectByLogin(String pseudo, String password) throws DALException {
+		System.out.println("jdbc2");
 		Utilisateurs user= null;
 		ResultSet rs = null;
 		try(Connection cnx = ConnectionProvider.getConnection())
