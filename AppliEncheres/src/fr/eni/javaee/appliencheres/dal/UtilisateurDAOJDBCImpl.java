@@ -22,7 +22,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	
 	@Override
 	public void insert(Utilisateurs utilisateur) throws DALException {
-		System.out.println("jdbc1");
+		
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			cnx.setAutoCommit(false);
@@ -119,7 +119,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 				pstmt.setInt(1, id);
 				rs = pstmt.executeQuery();
 				if(rs.next()){
-					user= new Utilisateurs(rs.getString("pseudo"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"),
+					user= new Utilisateurs(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"),
 							rs.getString("telephone"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville"),rs.getString("mot_de_passe"),
 							rs.getInt("credit"),rs.getBoolean("administrateur"));
 				}
@@ -148,8 +148,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 				pstmt.setString(2, password);
 				rs = pstmt.executeQuery();
 				if(rs.next()){
-					user= new Utilisateurs(rs.getInt("no_utilisateur"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"),
-							rs.getString("telephone"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville"),
+					user= new Utilisateurs(rs.getInt("no_utilisateur"),rs.getString("pseudo"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"),
+							rs.getString("telephone"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville"),rs.getString("mot_de_passe"),
 							rs.getInt("credit"),rs.getBoolean("administrateur"));
 				}
 
@@ -166,6 +166,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	
 	
 	public void delete(int id) throws DALException {
+		System.out.println("jdbc sup");
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 				try(PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR)){

@@ -1,6 +1,7 @@
 package org.projet_encheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ import org.projet_encheres.bo.Utilisateurs;
 /**
  * Servlet implementation class PageAccueilServlet
  */
-@WebServlet(urlPatterns = {"/", "/accueil", "/index"})
+//@WebServlet(urlPatterns = {"/accueil", "/index"})
 public class PageAccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,6 +31,7 @@ public class PageAccueilServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();	
 		String url = request.getServletPath();
+		LocalDate jour = LocalDate.now();
 		
 		String filtreNom = new String();
 		int filtreCategorie = 0;
@@ -51,9 +53,10 @@ public class PageAccueilServlet extends HttpServlet {
 		List<Categories> listDeToutesLesCategories = categoriesManager.recupererListeDeToutesLesCategories();
 		ArticlesManager articleManager = new ArticlesManager();
 		List<Articles> listDeTousLesArticles = articleManager.recupererListeDeTousLesArticles();
-		
+		//System.out.println(listDeTousLesArticles);
 		
 		request.setAttribute("filtreNom", filtreNom);
+		request.setAttribute("jour", jour);
 		request.setAttribute("filtreCategorie", filtreCategorie);
 		
 		request.setAttribute("articles", listDeTousLesArticles);

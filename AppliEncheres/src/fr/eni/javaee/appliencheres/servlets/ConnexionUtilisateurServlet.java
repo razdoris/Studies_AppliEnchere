@@ -54,9 +54,10 @@ public class ConnexionUtilisateurServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp").forward(request, response);
 			}else {
 				System.out.println("etape3");
-				HttpSession session = request.getSession(true);
+				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				request.getRequestDispatcher("/WEB-INF/jsp/inscriptionUtilisateur.jsp").forward(request, response);
+				System.out.println(session.getAttribute("user"));
+				request.getRequestDispatcher("/WEB-INF/jsp/afficherUtilisateur.jsp").forward(request, response);
 			}
 		}catch(Exception ex){
 			System.out.println("etape4");

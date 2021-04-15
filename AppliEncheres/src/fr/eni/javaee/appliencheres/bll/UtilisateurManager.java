@@ -10,7 +10,7 @@ import fr.eni.javaee.appliencheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
 
-	private  UtilisateurDAO utilisateurDao;
+	private  UtilisateurDAO  utilisateurDao;
 	public UtilisateurManager(){
 		this.utilisateurDao = DAOFactory.getUtilisateurDao();
 	}
@@ -81,8 +81,13 @@ public class UtilisateurManager {
 		return user;
 	}
 	
-	public void supprimerUtilisateur(Integer no_Utilisateur) throws DALException {
-		this.utilisateurDao.delete(no_Utilisateur);
+	public void supprimerUtilisateur(Integer no_Utilisateur) throws  BLLException {
+		System.out.println("test sup3");
+		try {
+			utilisateurDao.delete(no_Utilisateur);
+		}catch(DALException ex) {
+			throw new BLLException("erreur de modification des données");
+			}
 	}
 	
 	

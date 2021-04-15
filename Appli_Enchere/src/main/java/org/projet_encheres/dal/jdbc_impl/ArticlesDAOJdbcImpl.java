@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.projet_encheres.bo.Articles;
+import org.projet_encheres.bo.Encheres;
 import org.projet_encheres.dal.ArticleDAO;
 import org.projet_encheres.dal.ConnectionProvider;
 
@@ -18,12 +19,15 @@ public class ArticlesDAOJdbcImpl implements ArticleDAO{
 			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_vendeur, no_categorie, vente_annule) "
 			+ "Values (?, ?, ?, ?, ?, ?, ?, 0)";
 	private static final String SELECT_ALL="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,"
-			+ " prix_vente, no_vendeur, no_categorie, vente_annule FROM articles";
+			+ " prix_vente, no_vendeur, no_categorie, vente_annule FROM articles WHERE vente_annule = 0";
 			
 	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
 			+ "prix_initial, prix_vente, no_vendeur, no_categorie, vente_annule FROM articles a WHERE no_article = ?";
 	private static final String DELETE="DELETE FROM articles WHERE no_article = ?";
-	
+	private static final String UPDATE="UPDATE articles SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?"
+										+ " prix_initial = ?, no_categorie = ?"
+										+ "	WHERE no_article = ?";
+	private static final String ABORDE_BID="UPDATE articles SET vente_annule = 1 WHERE no_article = ?";	
 	
 	@Override
 	public void insert(Articles article) throws Exception {
@@ -116,7 +120,7 @@ public class ArticlesDAOJdbcImpl implements ArticleDAO{
 			e.printStackTrace();;
 			throw e;
 		}
-		System.out.println("liste articles dans jdbcImpl :" + listArticles);
+		//System.out.println("liste articles dans jdbcImpl :" + listArticles);
 		return listArticles;
 		
 	}
@@ -189,5 +193,79 @@ public class ArticlesDAOJdbcImpl implements ArticleDAO{
 		}
 		
 	}
+	
+
+	@Override
+	public void abordBid(int id) throws Exception {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			try(PreparedStatement pstmt = cnx.prepareStatement(ABORDE_BID)){
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+			}
+			catch(Exception e)
+			{
+				// TODO modifier le type d'erreur pour message utilisateur
+				e.printStackTrace();;
+				throw e;
+			}
+			
+		}
+		catch(Exception e)
+		{
+			// TODO modifier le type d'erreur pour message utilisateur
+			e.printStackTrace();;
+			throw e;
+		}
+		
+	}
+
+	/*
+	UPDATE="UPDATE articles SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?"
+			+ " prix_initial = ?, no_categorie = ?"
+			+ "	WHERE no_article = ?";
+			*/
+	@Override
+	public void update(Articles article) throws Exception {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			String nomArticle  = article.getNomArticle();
+			String descriptionArticle  = article.getDescriptionArticle();
+			Date dateDebutVenteArticle = Date.valueOf(article.getDateDebutEnchere());
+			Date dateFinVenteArticle = Date.valueOf(article.getDateFinEnchere());
+			int prixVenteArticle = article.getPrixInitial();
+			int noArticle = article.getNoArticle();
+			int noCategorieArticle = article.getNoCategorie();
+			try(PreparedStatement pstmt = cnx.prepareStatement(UPDATE)){
+				pstmt.setString(1, nomArticle);
+				pstmt.setString(2, descriptionArticle);
+				pstmt.setDate(3, dateDebutVenteArticle);
+				pstmt.setDate(4, dateFinVenteArticle);
+				pstmt.setInt(5, prixVenteArticle);
+				pstmt.setInt(6, noCategorieArticle);
+				pstmt.setInt(7, noArticle);
+				pstmt.executeUpdate();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				cnx.commit();
+			}catch (Exception e) {
+				// TODO modifier le type d'erreur pour message utilisateur
+				cnx.rollback();
+				throw e;
+			}
+			
+		}
+		catch(Exception e)
+		{
+			// TODO modifier le type d'erreur pour message utilisateur
+			e.printStackTrace();
+			
+			throw e;
+		}
+		
+	}
+
+
+
 
 }

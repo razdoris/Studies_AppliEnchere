@@ -2,17 +2,17 @@ package org.projet_encheres.bo;
 
 public class Utilisateurs {
 
-	private Integer no_utilisateur;
+	private Integer noUtilisateur;
 	private String pseudo;
 	private String nom;
 	private String prenom;
 	private String email;
 	private String telephone;
 	private String rue;
-	private String code_postal;
+	private String codePostal;
 	private String ville;
-	private String mot_de_passe;
-	private Integer credit;
+	private String motDePasse;
+	private int credit;
 	private Boolean administrateur;
 	
 	
@@ -22,7 +22,7 @@ public class Utilisateurs {
 
 
 	public Utilisateurs(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String code_postal, String ville, String mot_de_passe) {
+			String codePostal, String ville, String motDePasse) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -30,33 +30,33 @@ public class Utilisateurs {
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.code_postal = code_postal;
+		this.codePostal = codePostal;
 		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
+		this.motDePasse = motDePasse;
 	}
 
 
-	public Utilisateurs(Integer no_utilisateur, String pseudo, String nom, String prenom, String email,
-			String telephone, String rue, String code_postal, String ville, String mot_de_passe, Integer credit,
+	public Utilisateurs(Integer noUtilisateur, String pseudo, String nom, String prenom, String email,
+			String telephone, String rue, String codePostal, String ville, String motDePasse, Integer credit,
 			Boolean administrateur) {
 		super();
-		this.no_utilisateur = no_utilisateur;
+		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.code_postal = code_postal;
+		this.codePostal = codePostal;
 		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
+		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
 
 
 	public Utilisateurs(String pseudo, String nom, String prenom, String email,
-			String telephone, String rue, String code_postal, String ville) {
+			String telephone, String rue, String codePostal, String ville) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -64,19 +64,19 @@ public class Utilisateurs {
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.code_postal = code_postal;
+		this.codePostal = codePostal;
 		this.ville = ville;
 	}
 
 
-	public Utilisateurs(Integer no_utilisateur) {
+	public Utilisateurs(Integer noUtilisateur) {
 		super();
-		this.no_utilisateur = no_utilisateur;
+		this.noUtilisateur = noUtilisateur;
 	}
 
 
-	public Integer getNo_utilisateur() {
-		return no_utilisateur;
+	public Integer getNoUtilisateur() {
+		return noUtilisateur;
 	}
 
 
@@ -110,8 +110,8 @@ public class Utilisateurs {
 	}
 
 
-	public String getCode_postal() {
-		return code_postal;
+	public String getCodePostal() {
+		return codePostal;
 	}
 
 
@@ -120,8 +120,8 @@ public class Utilisateurs {
 	}
 
 
-	public String getMot_de_passe() {
-		return mot_de_passe;
+	public String getMotDePasse() {
+		return motDePasse;
 	}
 
 
@@ -135,8 +135,8 @@ public class Utilisateurs {
 	}
 
 
-	public void setNo_utilisateur(Integer no_utilisateur) {
-		this.no_utilisateur = no_utilisateur;
+	public void setNoUtilisateur(Integer no_utilisateur) {
+		this.noUtilisateur = no_utilisateur;
 	}
 
 
@@ -170,8 +170,8 @@ public class Utilisateurs {
 	}
 
 
-	public void setCode_postal(String code_postal) {
-		this.code_postal = code_postal;
+	public void setCodePostal(String code_postal) {
+		this.codePostal = code_postal;
 	}
 
 
@@ -180,8 +180,8 @@ public class Utilisateurs {
 	}
 
 
-	public void setMot_de_passe(String mot_de_passe) {
-		this.mot_de_passe = mot_de_passe;
+	public void setMotDPasse(String mot_de_passe) {
+		this.motDePasse = mot_de_passe;
 	}
 
 
@@ -197,14 +197,12 @@ public class Utilisateurs {
 
 	@Override
 	public String toString() {
-		return "Utilisateurs [" + (no_utilisateur != null ? "no_utilisateur=" + no_utilisateur + ", " : "")
-				+ (pseudo != null ? "pseudo=" + pseudo + ", " : "") + (nom != null ? "nom=" + nom + ", " : "")
-				+ (prenom != null ? "prenom=" + prenom + ", " : "") + (email != null ? "email=" + email + ", " : "")
-				+ (telephone != null ? "telephone=" + telephone + ", " : "") + (rue != null ? "rue=" + rue + ", " : "")
-				+ (code_postal != null ? "code_postal=" + code_postal + ", " : "")
-				+ (ville != null ? "ville=" + ville + ", " : "")
-				+ (mot_de_passe != null ? "mot_de_passe=" + mot_de_passe + ", " : "")
-				+ (credit != null ? "credit=" + credit + ", " : "")
-				+ (administrateur != null ? "administrateur=" + administrateur : "") + "]";
+		return "Utilisateurs [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
+				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
+				+ ", administrateur=" + administrateur + "]";
 	}
+
+
+	
 }

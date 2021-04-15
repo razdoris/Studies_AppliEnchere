@@ -10,40 +10,49 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import fr.eni.javaee.appliencheres.bll.BLLException;
 import fr.eni.javaee.appliencheres.bll.UtilisateurManager;
 import fr.eni.javaee.appliencheres.bo.Utilisateurs;
 
 /**
- * Servlet implementation class page3Servlet
+ * Servlet implementation class ModificationUtilisateurServlet
  */
-@WebServlet("/inscriptionUtilisateur")
-public class InscriptionUtilisateurServlet extends HttpServlet {
+@WebServlet("/modificationUtilisateur")
+public class ModificationUtilisateurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	public static final String champ_pseudo = "pseudo";
-	public static final String champ_nom = "nom";
-	public static final String champ_prenom = "prenom";
-	public static final String champ_email = "email";
-	public static final String champ_telephone = "telephone";
-	public static final String champ_rue = "rue";
-	public static final String champ_cp = "cp";
-	public static final String champ_ville = "ville";
-	public static final String champ_password = "password";
-	public static final String champ_confirmation = "confirmation";
-	public static final String inscription_erreur = "erreur";
-	public static final String inscription_resultat = "resultat";
-	
+	 
+		public static final String champ_pseudo = "pseudo";
+		public static final String champ_nom = "nom";
+		public static final String champ_prenom = "prenom";
+		public static final String champ_email = "email";
+		public static final String champ_telephone = "telephone";
+		public static final String champ_rue = "rue";
+		public static final String champ_cp = "cp";
+		public static final String champ_ville = "ville";
+		public static final String champ_password = "passwordNew";
+		public static final String champ_confirmation = "confirmation";
+		public static final String inscription_erreur = "erreur";
+		public static final String inscription_resultat = "resultat";
+		
+    public ModificationUtilisateurServlet() {
+        super();
+    }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Utilisateurs user = (Utilisateurs) session.getAttribute("user");
+		
 		RequestDispatcher rd = null;
-		rd=request.getRequestDispatcher("/WEB-INF/jsp/inscriptionUtilisateur.jsp");
+		rd=request.getRequestDispatcher("/WEB-INF/jsp/modificationUtilisateur.jsp");
 		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("post enchere1");
 		//Mise en place des paramètres pour récupérer les erreurs
+		HttpSession session = request.getSession();
+		Utilisateurs user = (Utilisateurs) session.getAttribute("user");
 		String resultat;
 		Map<String,String> erreur= new HashMap<String, String>();
 		
@@ -122,15 +131,15 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 			//ajouter l'utilisateur
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
-				Utilisateurs user=utilisateurManager.ajouterUtilisateur(pseudo, nom, prenom, email, telephone, rue, cp, ville, password);
-				request.setAttribute("inscription_utilisateur", user);
+				utilisateurManager.modifierUnUtilisateur(user);
+				request.setAttribute("modification_utilisateur", user);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp");
 				rd.forward(request, response);
 			}catch(Exception ex){
 				ex.printStackTrace();
 				resultat = ex.getMessage();
 				request.setAttribute(inscription_resultat, resultat);
-				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/inscriptionUtilisateur.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/modificationUtilisateur.jsp");
 				rd.forward(request, response);
 			}
 			}else {
@@ -139,7 +148,7 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 				request.setAttribute(inscription_erreur, erreur);
 				request.setAttribute(inscription_resultat, resultat);
 				
-				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/inscriptionUtilisateur.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/modificationUtilisateur.jsp");
 				rd.forward(request, response);
 			}
 		}
@@ -169,6 +178,3 @@ public class InscriptionUtilisateurServlet extends HttpServlet {
 		}
 	}
 }
-
-
-

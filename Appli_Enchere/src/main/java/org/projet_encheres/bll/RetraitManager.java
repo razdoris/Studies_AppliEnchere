@@ -26,19 +26,47 @@ public class RetraitManager {
 	
 	public Retrait recupererUnRetrait(int idRetrait){
 		Retrait retrait = new Retrait();
-		System.out.println("id dans article manager ok" + idRetrait);
+		
 		try
 		{
 			retrait = this.retraitDAO.selectById(idRetrait);
-			System.out.println("retrait dans manager : " + retrait);
+			
 		}
 		 catch (Exception e) 
 		{
-			 // TODO modifier la type d'erreur pour message utilisateur
+			
 			e.printStackTrace();
 		}
 		
 		return retrait;
+		
+	}
+
+	public void suprimerRetrait(int noArticleRetirerIci) {
+		try
+		{
+			this.retraitDAO.delete(noArticleRetirerIci);
+			
+		}
+		 catch (Exception e) 
+		{
+			
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void modifierRetrait(Retrait retrait) {
+		try
+		{
+			this.retraitDAO.update(retrait);
+			
+		}
+		 catch (Exception e) 
+		{
+			
+			e.printStackTrace();
+		}
 		
 	}
 }

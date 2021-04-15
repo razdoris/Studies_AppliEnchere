@@ -20,7 +20,7 @@ public class ArticlesManager {
 		try
 		{
 			listeDeTousLesArticles = this.articleDAO.selectAll();
-			System.out.println("liste articles dans manager : " + listeDeTousLesArticles);
+			//System.out.println("liste articles dans manager : " + listeDeTousLesArticles);
 		}
 		 catch (Exception e) 
 		{
@@ -34,11 +34,11 @@ public class ArticlesManager {
 	
 	public Articles recupererUnArticles(int idArticle){
 		Articles article = new Articles();
-		System.out.println("id dans article manager ok" + idArticle);
+		//System.out.println("id dans article manager ok" + idArticle);
 		try
 		{
 			article = this.articleDAO.selectById(idArticle);
-			System.out.println("articles dans manager : " + article);
+			//System.out.println("articles dans manager : " + article);
 		}
 		 catch (Exception e) 
 		{
@@ -60,6 +60,37 @@ public class ArticlesManager {
 		return article;
 	}
 	
+	public void modifierUnArticle(Articles article) {;
+		
+		try
+		{
+			this.articleDAO.update(article);
+			
+		}
+		 catch (Exception e) 
+		{
+			 // TODO modifier la type d'erreur pour message utilisateur
+			e.printStackTrace();
+		}
+
 	
+	}
+	
+
+	
+	public void annulerVenteArticle(int idArticle) {;
+		
+		try
+		{
+			this.articleDAO.abordBid(idArticle);
+			
+		}
+		 catch (Exception e) 
+		{
+			 // TODO modifier la type d'erreur pour message utilisateur
+			e.printStackTrace();
+		}
+	
+	}
 	
 }
