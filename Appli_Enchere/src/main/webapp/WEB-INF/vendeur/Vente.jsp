@@ -8,17 +8,18 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"/>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<link rel="stylesheet" href="css/main.css" media="screen"/>
+		
 		<title>Appli-Encheres nouvelle-vente</title>
 	</head>
 	<body>
 	<%@ include file="../header.jspf" %> 
+	<form method="post" action="">
 	
-	<!-- affichage des info ventes selon la vision du vendeur tant que la vente n'est pas fini -->
 	<c:choose>
 		<c:when test="${fn:contains(servlet,'nouvelleVente')}">
-		<!-- cas d'un nouvelle vente ou de la modification d'une ventes pour un vendeur -->
+		
 			<div class="container-fluid main">
 				<div class="row">
 					<div class="col-12 pb-5">
@@ -37,16 +38,17 @@
 				<div class="row">
 					<div class="col-3 offset-1 ">
 						<div class="pt-5">
-							<img src="source/picture/img.png" class="img-thumbnail mx-auto" style="width: 200px;" alt="200x200" >
+							<img src="${pageContext.servletContext.contextPath}/source/picture/img.png" class="img-thumbnail mx-auto" style="width: 200px;" alt="200x200" >
 						</div>
 					</div>				
 					<div class="col-8">
 					<p class="explaination col-7">champ obligatoire</p>
-						<form method="post" action="">
+						<div>
 							<div class="form-group required row">
 							    <label for="nomArticle" class="col-sm-2 col-form-label">article</label>
 							    <div class="col-sm-5">
 							    	<input type="text" class="form-control" id="nomArticle" name="nomArticle" required value="${articleAAfficher.nomArticle}">
+							    	<input type="hidden" class="form-control" id="noArticle" name="noArticle" required value="${articleAAfficher.noArticle}">
 							    </div>
 							</div>
 							<div class="form-group required row">
@@ -127,14 +129,14 @@
 								<div class="col-8">
 									<div class="container d-flex justify-content-between p-5">
 										<input type="submit" class="btn btn-light" name="action" value="Enregister">
-										<input type="submit" class="btn btn-light" name="action" value="Annuler">
+										<button type="button" class="btn btn-light" onclick = "history.back()">Annuler</button>
 										<c:if test="${fn:contains(servlet,'modifier')}"><!-- modifier -->
 											<input type="submit" class="btn btn-light"name="action" value="Annuler la vente">
 										</c:if>									
 									</div>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -165,10 +167,11 @@
 						</div>
 					</div>				
 					<div class="col-8">
-						<form method="post" action="">
+						<div>
 							<div class="form-group row">
 							    <div class="col-sm-7">
-							    	<p>${articleAAfficher.nomArticle}"</p>
+							    	<input type="text"  readonly class="form-control-plaintext" id="nomArticle" name="nomArticle" required value="${articleAAfficher.nomArticle}">
+							    	<input type="hidden" class="form-control" id="noArticle" name="noArticle" required value="${articleAAfficher.noArticle}">
 							    </div>
 							</div>
 							<div class="form-group row">
@@ -182,7 +185,8 @@
 							    <div class="col-sm-5">
 						    		<c:forEach var="categorie" items="${categories}">
 						    			<c:if test="${categorie.noCategorie==articleAAfficher.noCategorie}">
-					    					<input type="text" readonly class="form-control-plaintext" id="categorieArticle" name="categorieArticle" value=${categorie.nomCategorie}>
+					    					<input type="text" readonly class="form-control-plaintext" id="noCategorieArticle" name="noCategorieArticle" value="${categorie.noCategorie}"><!-- hidden -->
+					    					<input type="text" readonly class="form-control-plaintext" id="categorieArticle" name="categorieArticle" value="${categorie.nomCategorie}">
 					    				</c:if>
 						    		</c:forEach>
 							    </div>
@@ -190,9 +194,10 @@
 							<div class="form-group row">
 							    <label for="meilleurOffre" class="col-sm-2 col-form-label">Meilleurs Offre</label>
 							    <div class="col-sm-5">
-							    	${enchereAAfficher.montantEnchere}
+							    	<input type="text" readonly class="form-control-plaintext" id="maxEnchere" name="maxEnchere" value="${enchereAAfficher.montantEnchere}">
 							    	<c:if test="${!fn:contains(servlet,'gagnant')}">
 							    		par ${enchereAAfficher.nomUtilisateurMaxEnchere}
+							    		<input type="text" readonly class="form-control-plaintext" id="idAcheteurMaxEnchere" name="idAcheteurMaxEnchere" value="${enchereAAfficher.noUtilisateur}"><!--  hidden  -->
 							    	</c:if> 							    	
 							    </div>
 							</div>
@@ -205,6 +210,7 @@
 							<div class="form-group row">
 							    <label for="dateFinArticle" class="col-sm-2 col-form-label">Fin de l'enchère</label>
 							    <div class="col-sm-3">
+							    	<input type="date"readonly class="form-control-plaintext" id="dateDebutArticle" name="dateDebutArticle" value="${articleAAfficher.dateDebutEnchere}"><!-- hidden -->
 							    	<input type="date"readonly class="form-control-plaintext" id="dateFinArticle" name="dateFinArticle" value="${articleAAfficher.dateFinEnchere}">
 							    </div>
 							</div>
@@ -216,34 +222,34 @@
 							    </div>
 							</div>
 							<c:choose>
-								<c:when test=""> <!-- si détail acheteur-->
+								<c:when test="${fn:contains(servlet,'detail_acheteur')}"> <!-- si détail acheteur-->
 									<div class="form-group row">
 									    <label for="vendeur" class="col-sm-2 col-form-label">Vendeur</label>
 									    <div class="col-sm-3">
-									    	<input type="text" readonly class="form-control-plaintext" id="retrait-rue" name="retrait-rue" value="${vendeur.pseudo}">
+									    	<input type="text" readonly class="form-control-plaintext" id="vendeur" name="vendeur" value="${vendeur.pseudo}">
+									    	<input type="text" readonly class="form-control-plaintext" id="vendeur" name="vendeur" value="${vendeur.noUtilisateur}">
 									    </div>
 									</div>
-									<div class="form-group row">
+									<div class="form-group row ">
 									    <label for="proposition" class="col-sm-2 col-form-label">Ma proposition</label>
-									    <div class="col-sm-3">
+									    <span class="col-sm-2">
 									    	<input type="number" class="form-control" id="proposition" name="proposition" value="${enchereAAfficher.montantEnchere}">
-									    </div>
+									    </span>
+									    <input type="submit" class="btn btn-light" name="action" value="Encherir">
 									</div>
-									<input type="submit" class="btn btn-light" name="action" value="Encherir">
 								</c:when>
-								<c:when test=""> <!-- si resultat vendeur acheteur-->
+								<c:when test="${fn:contains(servlet,'resultat_vendeur')}"> <!-- si resultat vendeur acheteur-->
 									<input type="submit" class="btn btn-light" name="action" value="Retrait effectué">
 								</c:when>
-								<c:otherwise>
-									<button type="button" onclick = "history.back()">Back</button>
-								</c:otherwise>
 							</c:choose>
-						</form>
+							<button type="button" class="btn btn-light mb-5" onclick = "history.back()">Back</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</c:otherwise>
 	</c:choose>
+	</form>
 		
 		
 	

@@ -15,14 +15,24 @@ public class EncheresManager {
 		this.enchereDao =  DAOFactory.getEncheresDao();
 	}
 
-	public Encheres recupererListeDesEncheresDeLArticle(int idArticle) {
+	public Encheres recupererMaxEncheresDeLArticle(int idArticle) {
 		Encheres maxEncheresDunArticle = new Encheres();
 		try {
-			maxEncheresDunArticle = this.enchereDao.selectByArticleId(idArticle);
+			maxEncheresDunArticle = this.enchereDao.selectMaxByArticleId(idArticle);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return maxEncheresDunArticle;
+	}
+
+	public void ajouterEnchere(Encheres enchere) {
+		Encheres Enchere = new Encheres();
+		try {
+			this.enchereDao.insert(enchere);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 
 	

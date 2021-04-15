@@ -6,6 +6,6 @@ import org.projet_encheres.bo.Encheres;
 
 public interface EncheresDAO extends DAO<Encheres>{
 	
-	public Encheres selectByArticleId(int id) throws Exception;
+	public Encheres selectMaxByArticleId(int id) throws Exception;
 
 }

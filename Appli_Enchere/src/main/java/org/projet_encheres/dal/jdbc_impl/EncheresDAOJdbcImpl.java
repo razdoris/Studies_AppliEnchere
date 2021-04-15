@@ -32,7 +32,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		{
 			cnx.setAutoCommit(false);
 			int noUtilisateur = enchere.getNoUtilisateur();
-			int noArticle = enchere.getMontantEnchere();
+			int noArticle = enchere.getNoArticle();
 			Date dateEnchere = Date.valueOf(enchere.getDateEnchere());
 			int montantEnchere = enchere.getMontantEnchere();
 			
@@ -151,7 +151,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	}
 
 	@Override
-	public Encheres selectByArticleId(int id) throws Exception {
+	public Encheres selectMaxByArticleId(int id) throws Exception {
 		Encheres enchere = new Encheres();
 		 try(Connection cnx = ConnectionProvider.getConnection())
 			{
@@ -210,6 +210,12 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			e.printStackTrace();;
 			throw e;
 		}
+		
+	}
+
+	@Override
+	public void update(Encheres objet) throws Exception {
+		// TODO Auto-generated method stub
 		
 	}
 

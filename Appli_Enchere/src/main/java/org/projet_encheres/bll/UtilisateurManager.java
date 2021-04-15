@@ -1,6 +1,8 @@
 package org.projet_encheres.bll;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.projet_encheres.bo.Utilisateurs;
@@ -19,7 +21,7 @@ public class UtilisateurManager {
 	
 
 	public Utilisateurs ajouterUtilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String code_postal, String ville, String mot_de_passe) throws BLLException {
+			String codePostal, String ville, String motDePasse) throws BLLException {
 		
 		if(this.validerUtilisateur(pseudo, email).isEmpty());
 		Utilisateurs utilisateur =null;
@@ -31,9 +33,9 @@ public class UtilisateurManager {
 			utilisateur.setEmail(email);
 			utilisateur.setTelephone(telephone);
 			utilisateur.setRue(rue);
-			utilisateur.setCode_postal(code_postal);
+			utilisateur.setCodePostal(codePostal);
 			utilisateur.setVille(ville);
-			utilisateur.setMot_de_passe(mot_de_passe);
+			utilisateur.setMotDPasse(motDePasse);
 			this.utilisateurDao.insert(utilisateur);
 		
 		}catch(Exception ex){
@@ -62,15 +64,37 @@ public class UtilisateurManager {
 		return erreur;
 	}	
 	
-	public Utilisateurs selectionnerUnUtilisateur(Integer no_Utilisateur) throws DALException {
+	public Utilisateurs selectionnerUnUtilisateur(Integer noUtilisateur) throws DALException {
 		Utilisateurs utilisateur = new Utilisateurs(); 
 		try {
-			utilisateur = this.utilisateurDao.selectById(no_Utilisateur);
+			utilisateur = this.utilisateurDao.selectById(noUtilisateur);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return utilisateur;
+	}
+	
+	public List<Utilisateurs> recupererListeDeTousLesUtilisateur() throws DALException {
+		List<Utilisateurs> ListeDeTousLesUtilisateur = new ArrayList<>(); 
+		try {
+			ListeDeTousLesUtilisateur = this.utilisateurDao.selectAll();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ListeDeTousLesUtilisateur;
+	}
+
+
+	public void majCredit(int noUtilisateur, int modification) {
+		try {
+			this.utilisateurDao.majCredit(noUtilisateur, modification);;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

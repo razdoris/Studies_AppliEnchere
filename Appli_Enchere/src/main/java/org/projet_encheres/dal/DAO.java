@@ -8,4 +8,5 @@ public interface DAO<T> {
 	public List<T> selectAll() throws Exception;
 	public T selectById(int id) throws Exception;
 	public void delete(int id) throws Exception;
+	public void update(T objet) throws Exception;
 }
