@@ -9,7 +9,8 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<link rel="stylesheet" href="css/main.css" media="screen"/>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"/>
+		
 		<title>Brocanchere</title>
 	</head>
 	<body>
@@ -17,7 +18,7 @@
 	<div class="container-fluid main">
 		<div class="row">
 			<div class="col-12 pb-5">
-				<p class="h1 text-center">Liste des enchères ${user.no_utilisateur}</p>
+				<p class="h1 text-center">Liste des enchères</p>
 			</div>
 		</div>
 		<form class="row" method="post" action="">
@@ -108,11 +109,27 @@
 			<div class="col-6">
 				<input type="submit" value="Rechercher">
 			</div>
+			
 		</form>
 	</div>
-	
-	
-	
+	<div class="container-fluid">
+		<div class="row">
+			<c:forEach var="article" items="${articles}">
+				
+					<a href="${pageContext.servletContext.contextPath}/VisualiserVente?id=${article.noArticle}" class="card col-3 m-5">
+					    <img class="card-img-top" src="source/picture/img.png" alt="Card image cap">
+					    <div class="card-body">
+					      <h5 class="card-title">${article.nomArticle}</h5>
+					      <p class="card-text">Prix : ${article.prixInitial}</p>
+				          <p class="card-text">Fin debut enchère : ${article.dateDebutEnchere} </p>
+				          <p class="card-text">Fin de l'enchère : ${article.dateFinEnchere} </p>				            
+				          <p class="card-text">vendeur : ${article.noVendeur} </p>
+					    </div>					  	
+					  </a>	
+				
+			</c:forEach>
+		</div>
+	</div>
 	<%@ include file="footer.jspf" %> 
 	</body>
 </html>

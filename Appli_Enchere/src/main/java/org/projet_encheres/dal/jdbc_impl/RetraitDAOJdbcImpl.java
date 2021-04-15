@@ -19,7 +19,8 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			+ "Values (?, ?, ?, ?)";
 	private static final String SELECT_ALL="SELECT no_article, rue, code_postal, ville FROM retraits";
 	private static final String SELECT_BY_ID="SELECT no_article, rue, code_postal, ville FROM retraits WHERE no_article = ?";
-	private static final String DELETE="DELETE FROM retraits WHERE no_article";
+	private static final String DELETE="DELETE FROM retraits WHERE no_article = ?";
+	private static final String UPDATE="UPDATE retraits SET rue = ?, code_postal = ?, ville = ? WHERE no_article = ?";
 	
 	@Override
 	public void insert(Retrait retrait) throws Exception {
@@ -147,6 +148,41 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			throw e;
 		}
 		
+		
+	}
+
+	@Override
+	public void update(Retrait retrait) throws Exception {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			int noArticle = retrait.getNoArticleRetirerIci();
+			String rueRetrait  = retrait.getRue();
+			String cpRetrait  = retrait.getCodePostal();
+			String villeRetrait = retrait.getVille();
+			
+			try(PreparedStatement pstmt = cnx.prepareStatement(INSERT)){
+				pstmt.setString(1, rueRetrait);
+				pstmt.setString(2, cpRetrait);
+				pstmt.setString(3, villeRetrait);
+				pstmt.setInt(4, noArticle);
+				pstmt.executeUpdate();
+				
+				cnx.commit();
+			}catch (Exception e) {
+				// TODO modifier le type d'erreur pour message utilisateur
+				cnx.rollback();
+				throw e;
+			}
+			
+		}
+		catch(Exception e)
+		{
+			// TODO modifier le type d'erreur pour message utilisateur
+			e.printStackTrace();
+			
+			throw e;
+		}
 		
 	}
 

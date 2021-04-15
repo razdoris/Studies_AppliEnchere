@@ -136,4 +136,10 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO{
 		
 	}
 
+	@Override
+	public void update(Categories objet) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

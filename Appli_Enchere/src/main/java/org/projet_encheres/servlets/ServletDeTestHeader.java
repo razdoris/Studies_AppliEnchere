@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.projet_encheres.bll.UtilisateurManager;
 import org.projet_encheres.bo.Utilisateurs;
+import org.projet_encheres.dal.DALException;
 
 /**
  * Servlet implementation class ServletDeTestHeader
@@ -33,7 +35,14 @@ public class ServletDeTestHeader extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();  // appel de la methode getSession qui créer un session si elle n'existe pas sionon retourn la session existante
-		Utilisateurs user = new Utilisateurs(4, "nbeurel", "beurel", "nicolas", "nicolas.beurel2021@eni-campus.fr", "0606060060", "rue de la rue", "44000", "Nantes", "Pa$$word", 10, false);
+		Utilisateurs user = new Utilisateurs();
+		UtilisateurManager uM = new UtilisateurManager();
+		try {
+			user = uM.selectionnerUnUtilisateur(1);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(session.getAttribute("user")!=null) {
 			// si l'attribut de session "user" existe je le supprime
@@ -46,6 +55,7 @@ public class ServletDeTestHeader extends HttpServlet {
 
 			System.out.println("creation de la session");
 			session.setAttribute("user", user);  // je lie mon attribut "user" a ma session ainsi il est lier a l'utilisateur
+			System.out.println(session.getAttribute("user"));
 		}
 		request.getRequestDispatcher("/WEB-INF/test.jsp").forward(request, response);
 	}

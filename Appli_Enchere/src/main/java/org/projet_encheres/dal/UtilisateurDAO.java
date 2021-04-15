@@ -14,4 +14,6 @@ public interface UtilisateurDAO extends DAO<Utilisateurs>{
 	public List<Utilisateurs> selectByPseudo(String pseudo) throws DALException;
 	
 	public List<Utilisateurs> selectByEmail(String email) throws DALException;
+	
+	public void majCredit(int idUtilisateur, int modificationDeCredit) throws DALException;
 }

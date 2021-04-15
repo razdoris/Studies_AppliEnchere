@@ -29,7 +29,7 @@ public class ConnexionUtilisateurServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
-		rd=request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp");
+		rd=request.getRequestDispatcher("/WEB-INF/utilisateur/connexionUtilisateur.jsp");
 		rd.forward(request, response);
 	}
 
