@@ -75,6 +75,42 @@ public class Utilisateurs {
 	}
 
 
+	public Utilisateurs(String pseudo, String nom, String prenom, String email,
+			String telephone, String rue, String code_postal, String ville, String mot_de_passe, Integer credit,
+			Boolean administrateur) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.code_postal = code_postal;
+		this.ville = ville;
+		this.mot_de_passe = mot_de_passe;
+		this.credit = credit;
+		this.administrateur = administrateur;
+	}
+
+
+	public Utilisateurs(Integer no_utilisateur, String nom, String prenom, String email,
+			String telephone, String rue, String code_postal, String ville, Integer credit,
+			Boolean administrateur) {
+		super();
+		this.no_utilisateur = no_utilisateur;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.code_postal = code_postal;
+		this.ville = ville;
+		this.credit = credit;
+		this.administrateur = administrateur;
+	}
+
+
+
 	public Integer getNo_utilisateur() {
 		return no_utilisateur;
 	}
