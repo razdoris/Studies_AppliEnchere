@@ -16,7 +16,7 @@ public class UtilisateurManager {
 	}
 	
 
-	public Utilisateurs connecterUtilisateur(String pseudo, String password) throws BLLException {
+	public Utilisateurs  connecterUtilisateur(String pseudo, String password) throws BLLException {
 		Utilisateurs user = null;
 		try {
 			user = utilisateurDao.selectByLogin(pseudo, password);
