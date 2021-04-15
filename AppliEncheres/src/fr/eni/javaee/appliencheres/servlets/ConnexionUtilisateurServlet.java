@@ -49,7 +49,7 @@ public class ConnexionUtilisateurServlet extends HttpServlet {
 			Utilisateurs user = utilisateurManager.verifierLoginUtilisateur(pseudo, password);
 			if(user==null) {
 				System.out.println("etape2");
-				resultat="le mdp ne correspond pas au pseudo";
+				resultat="Le mot de passe ne correspond pas au pseudo";
 				request.setAttribute("resultat",resultat);
 				request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp").forward(request, response);
 			}else {
