@@ -15,16 +15,13 @@ public class UtilisateurManager {
 		this.utilisateurDao = DAOFactory.getUtilisateurDao();
 	}
 	
-
-	
-	
 	public Utilisateurs  verifierLoginUtilisateur(String pseudo, String password) throws BLLException {
 		System.out.println("manager1");
 		Utilisateurs user = null;
 		try {
 			user = utilisateurDao.selectByLogin(pseudo, password);
 		}catch(DALException ex) {
-			throw new BLLException("erreur de connexion");
+			throw new BLLException("erreur bll");
 			}
 		return user;
 	}
