@@ -68,6 +68,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 				pstmt.setString(7, utilisateur.getCode_postal());
 				pstmt.setString(8, utilisateur.getVille());
 				pstmt.setString(9, utilisateur.getMot_de_passe());
+				pstmt.setInt(10, utilisateur.getNo_utilisateur());
 				pstmt.executeUpdate();
 				cnx.commit();
 

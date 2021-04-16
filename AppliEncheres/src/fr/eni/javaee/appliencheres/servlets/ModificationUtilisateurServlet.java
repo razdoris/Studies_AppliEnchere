@@ -56,7 +56,7 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 		String resultat;
 		Map<String,String> erreur= new HashMap<String, String>();
 		
-		//Récupération des données 
+		//Récupération des données du formulaire 
 		String pseudo = request.getParameter(champ_pseudo);
 		String nom = request.getParameter(champ_nom);
 		String prenom = request.getParameter(champ_prenom);
@@ -127,19 +127,29 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 		}
 		
 		if(erreur.isEmpty()) {
+			//Affecter les donnees des champs au user de la session
+			user.setPseudo(pseudo);
+			user.setNom(nom);
+			user.setPrenom(prenom);
+			user.setEmail(email);
+			user.setTelephone(telephone);
+			user.setRue(rue);
+			user.setCode_postal(cp);
+			user.setVille(ville);
+			user.setMot_de_passe(password);
 			
-			//ajouter l'utilisateur
+			//aenvoyer au manager
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
 				utilisateurManager.modifierUnUtilisateur(user);
 				request.setAttribute("modification_utilisateur", user);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/afficherUtilisateur.jsp");
 				rd.forward(request, response);
 			}catch(Exception ex){
 				ex.printStackTrace();
 				resultat = ex.getMessage();
 				request.setAttribute(inscription_resultat, resultat);
-				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/modificationUtilisateur.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp");
 				rd.forward(request, response);
 			}
 			}else {
