@@ -30,7 +30,7 @@
 				<div class="form-group row ">
 						<label for="pseudo" class="col-lg-1 col-sm-5 col-form-label">Pseudo</label>
 						<div class="col-lg-5 col-sm-8">
-						<input type="text" class="form-control" name="pseudo" id="pseudo" value="<c:out value="${user.pseudo}"/>" disabled/>
+						<input type="text" class="form-control" name="pseudo" id="pseudo"  value="<c:out value="${user.pseudo}"/>" disabled/>
 					</div>
 						<label for="nom" class="col-lg-1 col-sm-5 col-form-label">Nom</label>
 						<div class="col-lg-5 col-sm-8">
