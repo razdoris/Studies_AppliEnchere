@@ -49,7 +49,7 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("post enchere1");
+		
 		//Mise en place des paramètres pour récupérer les erreurs
 		HttpSession session = request.getSession();
 		Utilisateurs user = (Utilisateurs) session.getAttribute("user");
@@ -138,20 +138,23 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 			user.setVille(ville);
 			user.setMot_de_passe(password);
 			
-			//aenvoyer au manager
+			//envoyer au manager
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
 				utilisateurManager.modifierUnUtilisateur(user);
+				//si traitement bll dal ok renvoi vers page affichage(pour les tests)
 				request.setAttribute("modification_utilisateur", user);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/afficherUtilisateur.jsp");
 				rd.forward(request, response);
 			}catch(Exception ex){
+				//si pb manager ou rqt
 				ex.printStackTrace();
 				resultat = ex.getMessage();
 				request.setAttribute(inscription_resultat, resultat);
 				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/jsp/connexionUtilisateur.jsp");
 				rd.forward(request, response);
 			}
+			//si erreur not empty, renvoi des erreurs de conformité
 			}else {
 				//renvoie les erreurs de la servlet
 				resultat = "Echec de l'inscription";
